@@ -8,6 +8,7 @@ import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Professor;
 import br.ufac.si.tesi.academico.modelo.Curso;
 
+@SuppressWarnings("serial")
 public class CursoCadastroEditar extends CursoCadastro {
 	
 	public CursoCadastroEditar(Conexao conexao, CursoConsulta janelaPai) {

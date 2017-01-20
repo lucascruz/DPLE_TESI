@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -20,8 +19,8 @@ import br.ufac.si.tesi.academico.controle.CentroControle;
 import br.ufac.si.tesi.academico.controle.DisciplinaControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
-import br.ufac.si.tesi.academico.modelo.Centro;
 
+@SuppressWarnings("serial")
 public class DisciplinaCadastro extends JFrame implements ActionListener {
 	
 	private JLabel lblCodigo, lblNome, lblCh, lblCentroSigla;
@@ -35,6 +34,7 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 	private DisciplinaControle controle;
 	private DisciplinaConsulta janelaPai;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DisciplinaCadastro(Conexao conexao, DisciplinaConsulta janelaPai) {
 		
 		controle = new DisciplinaControle(conexao);

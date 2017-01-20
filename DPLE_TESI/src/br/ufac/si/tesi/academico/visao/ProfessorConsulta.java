@@ -20,6 +20,7 @@ import br.ufac.si.tesi.academico.controle.ProfessorControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Professor;
 
+@SuppressWarnings("serial")
 public class ProfessorConsulta extends JFrame implements ActionListener {
 	
 	private JTable tblProfessor;

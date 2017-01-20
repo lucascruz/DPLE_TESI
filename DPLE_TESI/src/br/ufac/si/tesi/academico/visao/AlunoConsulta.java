@@ -20,6 +20,7 @@ import br.ufac.si.tesi.academico.controle.AlunoControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Aluno;
 
+@SuppressWarnings("serial")
 public class AlunoConsulta extends JFrame implements ActionListener {
 	
 	private JTable tblAluno;

@@ -8,6 +8,7 @@ import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
 import br.ufac.si.tesi.academico.modelo.Disciplina;
 
+@SuppressWarnings("serial")
 public class DisciplinaCadastroEditar extends DisciplinaCadastro {
 	
 	public DisciplinaCadastroEditar(Conexao conexao, DisciplinaConsulta janelaPai) {

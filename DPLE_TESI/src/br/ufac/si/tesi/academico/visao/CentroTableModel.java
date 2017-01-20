@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufac.si.tesi.academico.modelo.Centro;
 
+@SuppressWarnings("serial")
 public class CentroTableModel extends AbstractTableModel {
 	
 	private List<Centro> lista;

@@ -20,6 +20,7 @@ import br.ufac.si.tesi.academico.controle.CursoControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Curso;
 
+@SuppressWarnings("serial")
 public class CursoConsulta extends JFrame implements ActionListener {
 	
 	private JTable tblCurso;

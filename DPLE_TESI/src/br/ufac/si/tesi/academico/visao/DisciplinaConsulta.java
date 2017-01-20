@@ -20,6 +20,7 @@ import br.ufac.si.tesi.academico.controle.DisciplinaControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Disciplina;
 
+@SuppressWarnings("serial")
 public class DisciplinaConsulta extends JFrame implements ActionListener {
 	
 	private JTable tblDisciplina;

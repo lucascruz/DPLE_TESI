@@ -17,6 +17,7 @@ import br.ufac.si.tesi.academico.controle.CentroControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
 
+@SuppressWarnings("serial")
 public class CentroCadastro extends JFrame implements ActionListener {
 	
 	private JLabel lblSigla, lblNome;

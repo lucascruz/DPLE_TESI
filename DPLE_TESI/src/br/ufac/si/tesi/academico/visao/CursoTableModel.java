@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufac.si.tesi.academico.modelo.Curso;
 
+@SuppressWarnings("serial")
 public class CursoTableModel extends AbstractTableModel {
 	
 	private List<Curso> lista;

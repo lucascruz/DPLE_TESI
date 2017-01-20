@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -22,6 +21,7 @@ import br.ufac.si.tesi.academico.controle.ProfessorControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
 
+@SuppressWarnings("serial")
 public class ProfessorCadastro extends JFrame implements ActionListener {
 	
 	private JLabel lblMatricula, lblNome, lblRg, lblCpf, lblTelefone, lblEndereco, lblCep, lblEmail, lblSubstituto, lblCentro;
@@ -36,6 +36,7 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 	private ProfessorControle controle;
 	private ProfessorConsulta janelaPai;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ProfessorCadastro(Conexao conexao, ProfessorConsulta janelaPai) {
 		
 		controle = new ProfessorControle(conexao);

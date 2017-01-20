@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,6 +20,7 @@ import br.ufac.si.tesi.academico.controle.AlunoControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Curso;
 
+@SuppressWarnings("serial")
 public class AlunoCadastro extends JFrame implements ActionListener {
 	
 	private JLabel lblMatricula, lblNome, lblRg, lblCpf, lblTelefone, lblEndereco, lblCep, lblEmail, lblSubstituto, lblCurso;
@@ -35,6 +35,7 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 	private AlunoControle controle;
 	private AlunoConsulta janelaPai;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AlunoCadastro(Conexao conexao, AlunoConsulta janelaPai) {
 		
 		controle = new AlunoControle(conexao);

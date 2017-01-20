@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
 
+@SuppressWarnings("serial")
 public class CentroCadastroEditar extends CentroCadastro {
 	
 	public CentroCadastroEditar(Conexao conexao, CentroConsulta janelaPai) {

@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufac.si.tesi.academico.modelo.Disciplina;
 
+@SuppressWarnings("serial")
 public class DisciplinaTableModel extends AbstractTableModel {
 	
 	private List<Disciplina> lista;
