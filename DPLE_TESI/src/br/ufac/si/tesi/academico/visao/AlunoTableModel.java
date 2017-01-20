@@ -85,28 +85,25 @@ public class AlunoTableModel extends AbstractTableModel {
 			obj = aluno.getNome();
 			break;
 		case 2:
-			obj = aluno.getRg();
+			obj = aluno.getFone();
 			break;
 		case 3:
-			obj = aluno.getCpf();
-			break;
-		case 4:
-			obj = aluno.getTelefone();
-			break;
-		case 5:
 			obj = aluno.getEndereco();
 			break;
-		case 6:
+		case 4:
 			obj = aluno.getCep();
 			break;
-		case 7:
+		case 5:
 			obj = aluno.getEmail();
 			break;
-		case 8:
-			obj = aluno.isSubstituto();
+		case 6:
+			obj = aluno.getSexo();
 			break;
-		case 9:
-			obj = aluno.getCentro().getSigla();
+		case 7:
+			obj = aluno.isPne();
+			break;
+		case 8:
+			obj = aluno.getCurso().getCodigo();
 			break;
 
 		default:

@@ -1,6 +1,5 @@
 package br.ufac.si.tesi.academico.modelo;
 
-import java.math.BigDecimal;
 
 public class Professor {
 	

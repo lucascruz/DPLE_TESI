@@ -18,7 +18,7 @@ public class Conexao {
 		
 		String url = "jdbc:mysql://localhost/academico?useSSL=false";
 		String usuario = "root";
-		String senha = "";
+		String senha = "ufac";
 
 		try {
 			conexao = DriverManager.getConnection(url, usuario, senha);

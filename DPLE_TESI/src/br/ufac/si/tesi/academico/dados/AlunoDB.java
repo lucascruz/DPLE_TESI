@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufac.si.tesi.academico.modelo.Aluno;
-import br.ufac.si.tesi.academico.modelo.Centro;
 
 public class AlunoDB {
 	
@@ -38,7 +37,7 @@ public class AlunoDB {
 				      + aluno.getEndereco() + ","
 				+ "'" + aluno.getCep() + "',"
 				+ "'" + aluno.getSexo() + "',"
-				//+ "'" + aluno.getPne() + "',"
+				+ "'" + aluno.isPne() + "',"
 				+ "'" + aluno.getCurso() + "')";
 		int status = conexao.atualize(sql);
 		
@@ -58,7 +57,7 @@ public class AlunoDB {
 				+ "set endereco='" + aluno.getEndereco() + "' "
 				+ "set cep='" + aluno.getCep() + "' "
 				+ "set sexo='" + aluno.getSexo() + "' "
-				//+ "set pne='" + aluno.getNome() + "' "
+				+ "set pne='" + aluno.isPne() + "' "
 				+ "set curso_codigo='" + aluno.getCurso() + "' "
 				+ "where matricula='" + aluno.getMatricula() + "';";
 		
@@ -72,7 +71,7 @@ public class AlunoDB {
 		
 	}
 	
-	public boolean deletealuno(int matricula) {
+	public boolean deleteAluno(int matricula) {
 		
 		String sql = "delete from aluno where matricula=" + matricula + ";";
 		
@@ -89,7 +88,6 @@ public class AlunoDB {
 	public Aluno getAluno(int matricula) {
 
 		Aluno aluno = null;
-		Centro centro = null;
 		String sql = "select * from aluno where matricula=" + matricula + ";";
 		
 		rs = conexao.consulte(sql);
@@ -98,14 +96,13 @@ public class AlunoDB {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
 				aluno.setNome(rs.getString(2));
-				aluno.setRg(rs.getInt(3));
-				aluno.setCpf(rs.getLong(4));
-				aluno.setTelefone(rs.getString(5));
-				aluno.setEndereco(rs.getString(6));
-				aluno.setCep(rs.getString(7));
-				aluno.setEmail(rs.getString(8));
-				aluno.setPne(rs.getBoolean(9));
-				aluno.setCentro(dadosCentro.getCentro(rs.getString(10)));				
+				aluno.setFone(rs.getString(3));
+				aluno.setEndereco(rs.getString(4));
+				aluno.setCep(rs.getString(5));
+				aluno.setEmail(rs.getString(6));
+				aluno.setSexo(rs.getString(7));
+				aluno.setPne(rs.getBoolean(8));
+				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));				
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
@@ -127,14 +124,13 @@ public class AlunoDB {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
 				aluno.setNome(rs.getString(2));
-				aluno.setRg(rs.getInt(3));
-				aluno.setCpf(rs.getLong(4));
-				aluno.setTelefone(rs.getString(5));
-				aluno.setEndereco(rs.getString(6));
-				aluno.setCep(rs.getString(7));
-				aluno.setEmail(rs.getString(8));
-				aluno.setSubstituto(rs.getBoolean(9));
-				aluno.setCentro(dadosAlunos.getCentro(rs.getString(10)));
+				aluno.setFone(rs.getString(3));
+				aluno.setEndereco(rs.getString(4));
+				aluno.setCep(rs.getString(5));
+				aluno.setEmail(rs.getString(6));
+				aluno.setSexo(rs.getString(7));
+				aluno.setPne(rs.getBoolean(8));
+				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));
 				lista.add(aluno);
 			}
 		} catch (SQLException e) {
@@ -157,14 +153,13 @@ public class AlunoDB {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
 				aluno.setNome(rs.getString(2));
-				aluno.setRg(rs.getInt(3));
-				aluno.setCpf(rs.getLong(4));
-				aluno.setTelefone(rs.getString(5));
-				aluno.setEndereco(rs.getString(6));
-				aluno.setCep(rs.getString(7));
-				aluno.setEmail(rs.getString(8));
-				aluno.setSubstituto(rs.getBoolean(9));
-				aluno.setCentro(dadosCentro.getCentro(rs.getString(10)));
+				aluno.setFone(rs.getString(3));
+				aluno.setEndereco(rs.getString(4));
+				aluno.setCep(rs.getString(5));
+				aluno.setEmail(rs.getString(6));
+				aluno.setSexo(rs.getString(7));
+				aluno.setPne(rs.getBoolean(8));
+				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));		
 				lista.add(aluno);
 			}
 		} catch (SQLException e) {

@@ -2,9 +2,9 @@ package br.ufac.si.tesi.academico.modelo;
 
 public class Aluno{
 	
-	private String nome; 
-	private String endereco, sexo,fone, cep;
+	private String nome,endereco, sexo,fone, cep, email;
 	private int matricula;
+	private boolean pne;
 	private Curso curso;
 	  
 	public String getCep() {
@@ -50,4 +50,20 @@ public class Aluno{
 		this.curso = curso;
 	}
 	
+	
+	public void setEmail(String email){
+		this.email=email;
+	}
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setPne(boolean pne){
+		this.pne = pne;
+	}
+	
+	public boolean isPne() {
+		return pne;
+	}
+
 }

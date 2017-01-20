@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufac.si.tesi.academico.modelo.Centro;
-import br.ufac.si.tesi.academico.modelo.Professor;
+import br.ufac.si.tesi.academico.modelo.*;
 
 public class ProfessorDB {
 	
@@ -94,7 +93,6 @@ public class ProfessorDB {
 	public Professor getProfessor(int matricula) {
 
 		Professor professor = null;
-		Centro centro = null;
 		String sql = "select * from professor where matricula=" + matricula + ";";
 		
 		rs = conexao.consulte(sql);
