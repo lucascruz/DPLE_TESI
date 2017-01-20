@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -44,7 +45,11 @@ public class CentroConsulta extends JFrame implements ActionListener {
 		janelaEditar = new CentroCadastroEditar(conexao, this);
 		
 		controle = new CentroControle(conexao);
-		lista = controle.getCentros();
+		try {
+			lista = controle.getCentros();
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		painelBusca = new JPanel(new BorderLayout());
 		comboCampos = new JComboBox<String>(new String[]{"Sigla","Nome"});
@@ -109,11 +114,24 @@ public class CentroConsulta extends JFrame implements ActionListener {
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
 		if (stringBusca.isEmpty()) {
-			lista = controle.getCentros();
+			try {
+				lista = controle.getCentros();
+			} catch (SQLException e) {
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
-			lista.add(controle.getCentro(stringBusca));
+			try {
+				lista.add(controle.getCentro(stringBusca));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		} else {
-			lista = controle.getCentros(stringBusca);
+			try {
+				lista = controle.getCentros(stringBusca);
+			} catch (SQLException e) {
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		}
 		tblCentro.setModel(new CentroTableModel(lista));
 		

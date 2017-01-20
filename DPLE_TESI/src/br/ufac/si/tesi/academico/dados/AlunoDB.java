@@ -112,14 +112,14 @@ public class AlunoDB {
 		
 	}
 	
-	public List<Aluno> getAlunos() {
+	public List<Aluno> getAlunos() throws SQLException {
 		
 		List<Aluno> lista = new ArrayList<Aluno>();
 		Aluno aluno = null;
 		String sql = "select * from aluno;";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
@@ -133,22 +133,19 @@ public class AlunoDB {
 				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));
 				lista.add(aluno);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+
 		
 		return lista;
 		
 	}
 	
-	public List<Aluno> getAlunos(String nome) {
+	public List<Aluno> getAlunos(String nome) throws SQLException {
 		
 		List<Aluno> lista = new ArrayList<Aluno>();
 		Aluno aluno = null;
 		String sql = "select * from aluno where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
-		try {
 			while (rs.next()) {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
@@ -162,9 +159,6 @@ public class AlunoDB {
 				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));		
 				lista.add(aluno);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return lista;
 		

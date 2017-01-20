@@ -70,65 +70,59 @@ public class CentroDB {
 		
 	}
 	
-	public Centro getCentro(String sigla) {
+	public Centro getCentro(String sigla) throws SQLException {
 
 		Centro centro = null;
 		String sql = "select sigla, nome from centro where sigla='" + sigla + "';";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				centro = new Centro();
 				centro.setSigla(rs.getString(1));
 				centro.setNome(rs.getString(2));
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+
 		
 		return centro;
 		
 	}
 	
-	public List<Centro> getCentros() {
+	public List<Centro> getCentros() throws SQLException {
 		
 		List<Centro> lista = new ArrayList<Centro>();
 		Centro centro = null;
 		String sql = "select sigla, nome from centro;";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				centro = new Centro();
 				centro.setSigla(rs.getString(1));
 				centro.setNome(rs.getString(2));
 				lista.add(centro);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+
 		
 		return lista;
 		
 	}
 	
-	public List<Centro> getCentros(String nome) {
+	public List<Centro> getCentros(String nome) throws SQLException {
 		
 		List<Centro> lista = new ArrayList<Centro>();
 		Centro centro = null;
 		String sql = "select sigla, nome from centro where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				centro = new Centro();
 				centro.setSigla(rs.getString(1));
 				centro.setNome(rs.getString(2));
 				lista.add(centro);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+	
 		
 		return lista;
 		

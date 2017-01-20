@@ -90,13 +90,13 @@ public class ProfessorDB {
 		
 	}
 	
-	public Professor getProfessor(int matricula) {
+	public Professor getProfessor(int matricula)  throws SQLException{
 
 		Professor professor = null;
 		String sql = "select * from professor where matricula=" + matricula + ";";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				professor = new Professor();
 				professor.setMatricula(rs.getInt(1));
@@ -110,22 +110,20 @@ public class ProfessorDB {
 				professor.setSubstituto(rs.getBoolean(9));
 				professor.setCentro(dadosCentro.getCentro(rs.getString(10)));				
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+
 		
 		return professor;
 		
 	}
 	
-	public List<Professor> getProfessores() {
+	public List<Professor> getProfessores()  throws SQLException{
 		
 		List<Professor> lista = new ArrayList<Professor>();
 		Professor professor = null;
 		String sql = "select * from professor;";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				professor = new Professor();
 				professor.setMatricula(rs.getInt(1));
@@ -140,22 +138,19 @@ public class ProfessorDB {
 				professor.setCentro(dadosCentro.getCentro(rs.getString(10)));
 				lista.add(professor);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return lista;
 		
 	}
 	
-	public List<Professor> getProfessores(String nome) {
+	public List<Professor> getProfessores(String nome)  throws SQLException{
 		
 		List<Professor> lista = new ArrayList<Professor>();
 		Professor professor = null;
 		String sql = "select * from professor where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				professor = new Professor();
 				professor.setMatricula(rs.getInt(1));
@@ -170,10 +165,7 @@ public class ProfessorDB {
 				professor.setCentro(dadosCentro.getCentro(rs.getString(10)));
 				lista.add(professor);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
-		
+
 		return lista;
 		
 	}

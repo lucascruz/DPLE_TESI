@@ -16,29 +16,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import br.ufac.si.tesi.academico.controle.CentroControle;
-import br.ufac.si.tesi.academico.controle.DisciplinaControle;
+import br.ufac.si.tesi.academico.controle.ProfessorControle;
+import br.ufac.si.tesi.academico.controle.CursoControle;
 import br.ufac.si.tesi.academico.dados.Conexao;
-import br.ufac.si.tesi.academico.modelo.Centro;
-import br.ufac.si.tesi.academico.modelo.Centro;
+import br.ufac.si.tesi.academico.modelo.Professor;
 
-public class DisciplinaCadastro extends JFrame implements ActionListener {
+public class CursoCadastro extends JFrame implements ActionListener {
 	
-	private JLabel lblCodigo, lblNome, lblCh, lblCentroSigla;
+	private JLabel lblCodigo, lblNome, lblCoordenador;
 	private JButton botaoConfirmar, botaoCancelar;
 	private JTextField campoCodigo, campoNome, campoCh;
-	private JComboBox<Centro> campoSigla;
+	private JComboBox<Professor> campoProfessor;
 	
 	private JPanel painelBotoes, painelRotulos, painelCampos;
 	
-	private CentroControle centroControle;
-	private DisciplinaControle controle;
-	private DisciplinaConsulta janelaPai;
+	private ProfessorControle professorControle;
+	private CursoControle controle;
+	private CursoConsulta janelaPai;
 	
-	public DisciplinaCadastro(Conexao conexao, DisciplinaConsulta janelaPai) {
+	public CursoCadastro(Conexao conexao, CursoConsulta janelaPai) {
 		
-		controle = new DisciplinaControle(conexao);
-		centroControle = new CentroControle(conexao);
+		controle = new CursoControle(conexao);
+		professorControle = new ProfessorControle(conexao);
 		
 		this.janelaPai = janelaPai;
 
@@ -49,21 +48,18 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		
 		lblCodigo = new JLabel("Codigo:");
 		lblNome = new JLabel("Nome:");
-		lblCh = new JLabel("CH:");
-		lblCentroSigla = new JLabel("Centro:");
+		lblCoordenador = new JLabel("Coordenador:");
 		
 		painelRotulos.add(lblCodigo);
 		painelRotulos.add(lblNome);
-		painelRotulos.add(lblCh);
-		painelRotulos.add(lblCentroSigla);
+		painelRotulos.add(lblCoordenador);
 		
 		painelCampos = new JPanel(new GridLayout(10, 1, 5, 5));
 		
 		campoCodigo = new JTextField();
 		campoNome = new JTextField();
-		campoCh = new JTextField();
 		try {
-			campoSigla = new JComboBox(centroControle.getCentros().toArray());
+			campoProfessor = new JComboBox(professorControle.getProfessores().toArray());
 		} catch (SQLException e) {
 			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
 		}
@@ -71,7 +67,7 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		painelCampos.add(campoCodigo);
 		painelCampos.add(campoNome);
 		painelCampos.add(campoCh);
-		painelCampos.add(campoSigla);
+		painelCampos.add(campoProfessor);
 		
 		painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		botaoConfirmar = new JButton("Confirmar");
@@ -93,17 +89,16 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 
 		if (e.getSource() == botaoConfirmar) {
 			
-			String codigo =campoCodigo.getText();
+			int codigo = Integer.parseInt(campoCodigo.getText());
 			String nome = campoNome.getText();
-			int ch= Integer.parseInt(campoCh.getText());;
-			Centro centro = (Centro) campoSigla.getSelectedItem();
-			String centro_sigla= centro.getSigla();
+			Professor professor = (Professor) campoProfessor.getSelectedItem();
+			int coordenador= professor.getMatricula();
 			
-//			Disciplina centro = new Disciplina();
+//			Curso centro = new Curso();
 //			centro.setMatricula(matricula);
 //			centro.setNome(nome);
 			
-			confirmar(codigo, nome, ch,  centro_sigla);
+			confirmar(codigo, nome,coordenador);
 			
 		} else if (e.getSource() == botaoCancelar) {
 			janelaPai.buscar();
@@ -112,14 +107,9 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		
 	}
 	
-	public void confirmar(String codigo, String nome, int ch, String  centro_sigla) {
+	public void confirmar(int codigo, String nome, int coordenador) {
 		
-		boolean status = false;
-		try {
-			status = controle.insertDisciplina(codigo, nome, ch, centro_sigla);
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+		boolean status = controle.insertCurso(codigo, nome, coordenador);
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -129,7 +119,7 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		
 	}
 	
-	public DisciplinaControle getControle() {
+	public CursoControle getControle() {
 		
 		return controle;
 		
@@ -148,8 +138,8 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 	}
 
 
-	public JComboBox<Centro> getCampoCentro() {
-		return campoSigla;
+	public JComboBox<Professor> getCampoCoordenador() {
+		return campoProfessor;
 	}
 
 

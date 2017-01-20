@@ -28,7 +28,7 @@ public class CursoDB {
 	
 	public boolean insertCurso(Curso curso) {
 		
-		String sql = "insert into curso (codigo, nome) values ('" + curso.getCodigo() + "', '" + curso.getNome() + "')";
+		String sql = "insert into curso (codigo, nome, coordenador) values ('" + curso.getCodigo() + "', '" + curso.getNome() +"', '" + curso.getCoordenador() + "')";
 		
 		int status = conexao.atualize(sql);
 		

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -80,7 +81,11 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 		campoCep = new JTextField();
 		campoEmail = new JTextField();
 		campoSubstituto = new JCheckBox();
-		campoCentro = new JComboBox(centroControle.getCentros().toArray());
+		try {
+			campoCentro = new JComboBox(centroControle.getCentros().toArray());
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		painelCampos.add(campoMatricula);
 		painelCampos.add(campoNome);
@@ -140,7 +145,12 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 	
 	public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
 		
-		boolean status = controle.insertProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+		boolean status = false;
+		try {
+			status = controle.insertProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 

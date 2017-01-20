@@ -1,5 +1,7 @@
 package br.ufac.si.tesi.academico.visao;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import br.ufac.si.tesi.academico.dados.Conexao;
@@ -16,7 +18,12 @@ public class ProfessorCadastroEditar extends ProfessorCadastro {
 	@Override
 	public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
 		
-		boolean status = getControle().updateProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+		boolean status = false;
+		try {
+			status = getControle().updateProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -29,8 +36,12 @@ public class ProfessorCadastroEditar extends ProfessorCadastro {
 	public void carregar(int matricula) {
 		
 		Centro centro;
-		Professor professor;
-		professor = getControle().getProfessor(matricula);
+		Professor professor = null;
+		try {
+			professor = getControle().getProfessor(matricula);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		getCampoMatricula().setText(String.valueOf(professor.getMatricula()));
 		getCampoNome().setText(professor.getNome());

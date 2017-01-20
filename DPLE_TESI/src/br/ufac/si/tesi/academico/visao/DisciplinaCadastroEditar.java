@@ -1,5 +1,7 @@
 package br.ufac.si.tesi.academico.visao;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import br.ufac.si.tesi.academico.dados.Conexao;
@@ -15,7 +17,12 @@ public class DisciplinaCadastroEditar extends DisciplinaCadastro {
 	@Override
 	public void confirmar(String codigo, String nome, int ch, String  centro_sigla) {
 		
-		boolean status = getControle().updateDisciplina(codigo, nome, ch, centro_sigla);
+		boolean status = false;
+		try {
+			status = getControle().updateDisciplina(codigo, nome, ch, centro_sigla);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -27,9 +34,13 @@ public class DisciplinaCadastroEditar extends DisciplinaCadastro {
 	
 	public void carregar(int codigo) {
 		
-		Centro centro;;
-		Disciplina disciplina;
-		disciplina = getControle().getDisciplina(codigo);
+		Centro centro;
+		Disciplina disciplina = null;
+		try {
+			disciplina = getControle().getDisciplina(codigo);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		getCampoCodigo().setText(String.valueOf(disciplina.getCodigo()));
 		getCampoNome().setText(disciplina.getNome());

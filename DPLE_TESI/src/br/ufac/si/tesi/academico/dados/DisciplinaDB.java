@@ -78,13 +78,13 @@ public class DisciplinaDB {
 		
 	}
 	
-	public Disciplina getDisciplina(int codigo) {
+	public Disciplina getDisciplina(int codigo) throws SQLException {
 
 		Disciplina disciplina = null;
 		String sql = "select * from disciplina where codigo=" + codigo + ";";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				disciplina = new Disciplina();
 				disciplina.setCodigo(rs.getString(1));
@@ -92,22 +92,19 @@ public class DisciplinaDB {
 				disciplina.setCh(rs.getInt(3));
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));				
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return disciplina;
 		
 	}
 	
-	public List<Disciplina> getDisciplinaes() {
+	public List<Disciplina> getDisciplinas() throws SQLException {
 		
 		List<Disciplina> lista = new ArrayList<Disciplina>();
 		Disciplina disciplina = null;
 		String sql = "select * from disciplina;";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				disciplina = new Disciplina();
 				disciplina.setCodigo(rs.getString(1));
@@ -116,22 +113,19 @@ public class DisciplinaDB {
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));		
 				lista.add(disciplina);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return lista;
 		
 	}
 	
-	public List<Disciplina> getDisciplinaes(String nome) {
+	public List<Disciplina> getDisciplinas(String nome)  throws SQLException{
 		
 		List<Disciplina> lista = new ArrayList<Disciplina>();
 		Disciplina disciplina = null;
 		String sql = "select * from disciplina where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				disciplina = new Disciplina();
 				disciplina.setCodigo(rs.getString(1));
@@ -140,10 +134,7 @@ public class DisciplinaDB {
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));		
 				lista.add(disciplina);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
-		
+
 		return lista;
 		
 	}

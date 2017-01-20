@@ -1,5 +1,6 @@
 package br.ufac.si.tesi.academico.controle;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.ufac.si.tesi.academico.dados.CentroDB;
@@ -31,7 +32,7 @@ public class CentroControle {
 		
 	}
 	
-	public boolean updateCentro(String sigla, String nome) {
+	public boolean updateCentro(String sigla, String nome) throws SQLException {
 		
 		Centro centro = null;
 		
@@ -51,19 +52,19 @@ public class CentroControle {
 		
 	}
 	
-	public List<Centro> getCentros(String nome) {
+	public List<Centro> getCentros(String nome) throws SQLException {
 		
 		return dados.getCentros(nome);
 		
 	}
 	
-	public Centro getCentro(String sigla) {
+	public Centro getCentro(String sigla) throws SQLException {
 		
 		return dados.getCentro(sigla);
 		
 	}
 	
-	public List<Centro> getCentros() {
+	public List<Centro> getCentros() throws SQLException {
 		
 		return dados.getCentros();
 		

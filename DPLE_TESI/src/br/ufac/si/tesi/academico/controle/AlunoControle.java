@@ -1,5 +1,6 @@
 package br.ufac.si.tesi.academico.controle;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.ufac.si.tesi.academico.dados.AlunoDB;
@@ -68,7 +69,7 @@ public class AlunoControle {
 		
 	}
 	
-	public List<Aluno> getAlunos(String nome) {
+	public List<Aluno> getAlunos(String nome) throws SQLException {
 		
 		return dados.getAlunos(nome);
 		
@@ -80,7 +81,7 @@ public class AlunoControle {
 		
 	}
 	
-	public List<Aluno> getAlunos() {
+	public List<Aluno> getAlunos() throws SQLException {
 		
 		return dados.getAlunos();
 		

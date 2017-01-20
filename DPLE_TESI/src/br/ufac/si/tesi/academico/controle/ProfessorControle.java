@@ -1,6 +1,7 @@
 package br.ufac.si.tesi.academico.controle;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 import br.ufac.si.tesi.academico.dados.ProfessorDB;
@@ -19,7 +20,7 @@ public class ProfessorControle {
 		
 	}
 	
-	public boolean insertProfessor(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
+	public boolean insertProfessor(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) throws SQLException {
 		
 		Professor professor = null;
 		
@@ -42,7 +43,7 @@ public class ProfessorControle {
 		
 	}
 	
-	public boolean updateProfessor(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
+	public boolean updateProfessor(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) throws SQLException {
 		
 		Professor professor = null;
 		
@@ -70,19 +71,19 @@ public class ProfessorControle {
 		
 	}
 	
-	public List<Professor> getProfessores(String nome) {
+	public List<Professor> getProfessores(String nome) throws SQLException {
 		
 		return dados.getProfessores(nome);
 		
 	}
 	
-	public Professor getProfessor(int matricula) {
+	public Professor getProfessor(int matricula) throws SQLException {
 		
 		return dados.getProfessor(matricula);
 		
 	}
 	
-	public List<Professor> getProfessores() {
+	public List<Professor> getProfessores() throws SQLException {
 		
 		return dados.getProfessores();
 		

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -44,7 +45,11 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 		janelaEditar = new DisciplinaCadastroEditar(conexao, this);
 		
 		controle = new DisciplinaControle(conexao);
-		lista = controle.getDisciplinas();
+		try {
+			lista = controle.getDisciplinas();
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		painelBusca = new JPanel(new BorderLayout());
 		comboCampos = new JComboBox<String>(new String[]{"Codigo","Nome"});
@@ -109,11 +114,23 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
 		if (stringBusca.isEmpty()) {
-			lista = controle.getDisciplinas();
+			try {
+				lista = controle.getDisciplinas();
+			} catch (SQLException e) {
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
-			lista.add(controle.getDisciplina(Integer.parseInt(stringBusca)));
+			try {
+				lista.add(controle.getDisciplina(Integer.parseInt(stringBusca)));
+			}catch (SQLException e) {
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		} else {
-			lista = controle.getDisciplinas(stringBusca);
+			try {
+				lista = controle.getDisciplinas(stringBusca);
+			} catch (SQLException e) {
+				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			}
 		}
 		tblDisciplina.setModel(new DisciplinaTableModel(lista));
 		

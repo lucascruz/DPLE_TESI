@@ -1,5 +1,6 @@
 package br.ufac.si.tesi.academico.controle;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.ufac.si.tesi.academico.dados.DisciplinaDB;
@@ -18,7 +19,7 @@ public class DisciplinaControle {
 		
 	}
 	
-	public boolean insertDisciplina( String codigo, String nome, int ch, String centro_sigla) {
+	public boolean insertDisciplina( String codigo, String nome, int ch, String centro_sigla) throws SQLException {
 		
 		Disciplina disciplina = null;
 		
@@ -35,7 +36,7 @@ public class DisciplinaControle {
 		
 	}
 	
-	public boolean updateDisciplina( String codigo, String nome, int ch, String centro_sigla) {
+	public boolean updateDisciplina( String codigo, String nome, int ch, String centro_sigla) throws SQLException {
 		
 		Disciplina disciplina = null;
 		
@@ -58,21 +59,21 @@ public class DisciplinaControle {
 		
 	}
 	
-	public List<Disciplina> getDisciplinas(String nome) {
+	public List<Disciplina> getDisciplinas(String nome) throws SQLException {
 		
-		return dados.getDisciplinaes(nome);
+		return dados.getDisciplinas(nome);
 		
 	}
 	
-	public Disciplina getDisciplina(int matricula) {
+	public Disciplina getDisciplina(int matricula) throws SQLException {
 		
 		return dados.getDisciplina(matricula);
 		
 	}
 	
-	public List<Disciplina> getDisciplinas() {
+	public List<Disciplina> getDisciplinas() throws SQLException {
 		
-		return dados.getDisciplinaes();
+		return dados.getDisciplinas();
 		
 	}
 

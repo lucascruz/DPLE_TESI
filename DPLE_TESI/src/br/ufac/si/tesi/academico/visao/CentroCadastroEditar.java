@@ -1,5 +1,7 @@
 package br.ufac.si.tesi.academico.visao;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import br.ufac.si.tesi.academico.dados.Conexao;
@@ -15,7 +17,12 @@ public class CentroCadastroEditar extends CentroCadastro {
 	@Override
 	public void confirmar(String sigla, String nome) {
 		
-		boolean status = getControle().updateCentro(sigla, nome);
+		boolean status = false;
+		try {
+			status = getControle().updateCentro(sigla, nome);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -27,8 +34,12 @@ public class CentroCadastroEditar extends CentroCadastro {
 	
 	public void carregar(String sigla) {
 		
-		Centro centro;
-		centro = getControle().getCentro(sigla);
+		Centro centro = null;
+		try {
+			centro = getControle().getCentro(sigla);
+		} catch (SQLException e) {
+			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+		}
 		getCampoSigla().setText(centro.getSigla());
 		getCampoNome().setText(centro.getNome());
 		getCampoSigla().setEnabled(false);
