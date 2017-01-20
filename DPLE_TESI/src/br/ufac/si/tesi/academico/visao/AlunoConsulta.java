@@ -34,13 +34,15 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 	private AlunoCadastro janelaCadastro;
 	private AlunoCadastroEditar janelaEditar;
 	
-	public AlunoConsulta() {
+	public AlunoConsulta(Conexao cnx) {
 
+		//Teste
+				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
 		
-		conexao = new Conexao();
-		conexao.conecte();
+		//conexao = new Conexao();
+		//conexao.conecte();
 		
 		janelaCadastro = new AlunoCadastro(conexao, this);
 		janelaEditar = new AlunoCadastroEditar(conexao, this);
@@ -122,7 +124,12 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
 			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
-			lista.add(controle.getAluno(Integer.parseInt(stringBusca)));
+			try {
+				lista.add(controle.getAluno(Integer.parseInt(stringBusca)));
+			}  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				lista = controle.getAlunos(stringBusca);

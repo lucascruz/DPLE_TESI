@@ -28,6 +28,7 @@ public class CursoCadastro extends JFrame implements ActionListener {
 	private JTextField campoCodigo, campoNome, campoCh;
 	private JComboBox<Professor> campoProfessor;
 	
+	
 	private JPanel painelBotoes, painelRotulos, painelCampos;
 	
 	private ProfessorControle professorControle;
@@ -62,8 +63,10 @@ public class CursoCadastro extends JFrame implements ActionListener {
 		try {
 			campoProfessor = new JComboBox(professorControle.getProfessores().toArray());
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		
 		painelCampos.add(campoCodigo);
 		painelCampos.add(campoNome);
@@ -93,11 +96,7 @@ public class CursoCadastro extends JFrame implements ActionListener {
 			String nome = campoNome.getText();
 			Professor professor = (Professor) campoProfessor.getSelectedItem();
 			int coordenador= professor.getMatricula();
-			
-//			Curso centro = new Curso();
-//			centro.setMatricula(matricula);
-//			centro.setNome(nome);
-			
+
 			confirmar(codigo, nome,coordenador);
 			
 		} else if (e.getSource() == botaoCancelar) {

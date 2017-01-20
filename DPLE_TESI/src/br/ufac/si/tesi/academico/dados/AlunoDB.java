@@ -85,13 +85,12 @@ public class AlunoDB {
 		
 	}
 	
-	public Aluno getAluno(int matricula) {
+	public Aluno getAluno(int matricula) throws SQLException {
 
 		Aluno aluno = null;
 		String sql = "select * from aluno where matricula=" + matricula + ";";
 		
 		rs = conexao.consulte(sql);
-		try {
 			while (rs.next()) {
 				aluno = new Aluno();
 				aluno.setMatricula(rs.getInt(1));
@@ -104,9 +103,6 @@ public class AlunoDB {
 				aluno.setPne(rs.getBoolean(8));
 				aluno.setCurso(dadosCurso.getCurso(rs.getInt(9)));				
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return aluno;
 		

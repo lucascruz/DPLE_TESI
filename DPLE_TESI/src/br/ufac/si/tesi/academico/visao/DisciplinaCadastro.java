@@ -99,10 +99,6 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 			Centro centro = (Centro) campoSigla.getSelectedItem();
 			String centro_sigla= centro.getSigla();
 			
-//			Disciplina centro = new Disciplina();
-//			centro.setMatricula(matricula);
-//			centro.setNome(nome);
-			
 			confirmar(codigo, nome, ch,  centro_sigla);
 			
 		} else if (e.getSource() == botaoCancelar) {

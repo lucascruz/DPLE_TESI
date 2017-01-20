@@ -1,5 +1,7 @@
 package br.ufac.si.tesi.academico.visao;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import br.ufac.si.tesi.academico.dados.Conexao;
@@ -16,7 +18,13 @@ public class AlunoCadastroEditar extends AlunoCadastro {
 	@Override
 	public void confirmar(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo) {
 		
-		boolean status = getControle().updateAluno(matricula, nome, telefone, endereco, cep, email,sexo, pne, curso_codigo);
+		boolean status = false;
+		try {
+			status = getControle().updateAluno(matricula, nome, telefone, endereco, cep, email,sexo, pne, curso_codigo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -29,12 +37,17 @@ public class AlunoCadastroEditar extends AlunoCadastro {
 	public void carregar(int matricula) {
 		
 		Curso curso;
-		Aluno aluno;
-		aluno = getControle().getAluno(matricula);
+		Aluno aluno = null;
+		try {
+			aluno = getControle().getAluno(matricula);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		getCampoMatricula().setText(String.valueOf(aluno.getMatricula()));
 		getCampoNome().setText(aluno.getNome());
-		getCampoSexo().setText(String.valueOf(aluno.getSexo()));
+		getCampo().setText(aluno.getSexo());
 		getCampoTelefone().setText(aluno.getFone());
 		getCampoEndereco().setText(aluno.getEndereco());
 		getCampoCep().setText(aluno.getCep());

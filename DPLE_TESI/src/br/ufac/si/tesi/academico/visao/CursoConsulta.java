@@ -34,19 +34,26 @@ public class CursoConsulta extends JFrame implements ActionListener {
 	private CursoCadastro janelaCadastro;
 	private CursoCadastroEditar janelaEditar;
 	
-	public CursoConsulta() {
+	public CursoConsulta(Conexao cnx) {
 
+		//Teste
+				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
 		
-		conexao = new Conexao();
-		conexao.conecte();
+		//conexao = new Conexao();
+		//conexao.conecte();
 		
 		janelaCadastro = new CursoCadastro(conexao, this);
 		janelaEditar = new CursoCadastroEditar(conexao, this);
 		
 		controle = new CursoControle(conexao);
-		lista = controle.getCursos();
+		try {
+			lista = controle.getCursos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		painelBusca = new JPanel(new BorderLayout());
 		comboCampos = new JComboBox<String>(new String[]{"Codigo","Nome"});
@@ -116,11 +123,21 @@ public class CursoConsulta extends JFrame implements ActionListener {
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
 		if (stringBusca.isEmpty()) {
-			lista = controle.getCursos();
+			try {
+				lista = controle.getCursos();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
 			lista.add(controle.getCurso(Integer.parseInt(stringBusca)));
 		} else {
-			lista = controle.getCursos(stringBusca);
+			try {
+				lista = controle.getCursos(stringBusca);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		tblCurso.setModel(new CursoTableModel(lista));
 		

@@ -13,15 +13,14 @@ public class Conexao {
 	private Connection conexao;
 	private boolean conectado = false;
 	private Statement smt;
+	private static final String urlDB = "jdbc:mysql://localhost/academico?useSSL=false";
 	
-	public void conecte() {
-		
-		String url = "jdbc:mysql://localhost/academico?useSSL=false";
-		String usuario = "root";
-		String senha = "ufac";
+	public void conecte(String u, String s) {
+		String usuario = u;
+		String senha = s;
 
 		try {
-			conexao = DriverManager.getConnection(url, usuario, senha);
+			conexao = DriverManager.getConnection(urlDB, usuario, senha);
 			conectado = true;
 		} catch (SQLException e) {
 			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());

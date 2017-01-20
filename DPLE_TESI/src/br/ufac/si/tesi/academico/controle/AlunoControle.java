@@ -23,7 +23,7 @@ public class AlunoControle {
 		
 		Aluno aluno = null;
 		
-		if (matricula == 0 || nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() ||cep.isEmpty()  || email.isEmpty() || pne==false || curso_codigo==0){
+		if (matricula == 0 || nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() ||cep.isEmpty()  || email.isEmpty() || sexo.isEmpty() || pne == false || curso_codigo==0){
 			return false;
 		} else {
 			aluno = new Aluno();
@@ -41,7 +41,7 @@ public class AlunoControle {
 		
 	}
 	
-	public boolean updateAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo){
+	public boolean updateAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo) throws SQLException{
 		
 		Aluno aluno = null;
 		
@@ -75,7 +75,7 @@ public class AlunoControle {
 		
 	}
 	
-	public Aluno getAluno(int matricula) {
+	public Aluno getAluno(int matricula) throws SQLException {
 		
 		return dados.getAluno(matricula);
 		

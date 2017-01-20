@@ -90,45 +90,37 @@ public class CursoDB {
 		
 	}
 	
-	public List<Curso> getCursos() {
+	public List<Curso> getCursos() throws SQLException {
 		
 		List<Curso> lista = new ArrayList<Curso>();
 		Curso curso = null;
 		String sql = "select codigo, nome from curso;";
 		
 		rs = conexao.consulte(sql);
-		try {
 			while (rs.next()) {
 				curso = new Curso();
 				curso.setCodigo(rs.getInt(1));
 				curso.setNome(rs.getString(2));
 				lista.add(curso);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return lista;
 		
 	}
 	
-	public List<Curso> getCursos(String nome) {
+	public List<Curso> getCursos(String nome) throws SQLException {
 		
 		List<Curso> lista = new ArrayList<Curso>();
 		Curso curso = null;
 		String sql = "select codigo, nome from curso where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
-		try {
 			while (rs.next()) {
 				curso = new Curso();
 				curso.setCodigo(rs.getInt(1));
 				curso.setNome(rs.getString(2));
 				lista.add(curso);
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return lista;
 		

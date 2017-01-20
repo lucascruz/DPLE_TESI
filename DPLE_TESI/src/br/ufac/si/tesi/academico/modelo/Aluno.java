@@ -2,7 +2,7 @@ package br.ufac.si.tesi.academico.modelo;
 
 public class Aluno{
 	
-	private String nome,endereco, sexo,fone, cep, email;
+	private String nome,endereco,fone, cep, email, sexo;
 	private int matricula;
 	private boolean pne;
 	private Curso curso;
@@ -37,11 +37,11 @@ public class Aluno{
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getSexo() {
+	public  String getSexo() {
 		return sexo;
 	}
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setSexo(String s) {
+		this.sexo = s;
 	}
 	public Curso getCurso() {
 		return curso;

@@ -34,13 +34,17 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 	private ProfessorCadastro janelaCadastro;
 	private ProfessorCadastroEditar janelaEditar;
 	
-	public ProfessorConsulta() {
+	public ProfessorConsulta(Conexao cnx) {
 
+//Teste
+		this.conexao = cnx;
+		
+		
 		setSize(400,300);
 		setLocationRelativeTo(null);
 		
-		conexao = new Conexao();
-		conexao.conecte();
+		//conexao = new Conexao();
+	//	conexao.conecte();
 		
 		janelaCadastro = new ProfessorCadastro(conexao, this);
 		janelaEditar = new ProfessorCadastroEditar(conexao, this);
@@ -80,6 +84,8 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 		add(painelBotoes, BorderLayout.SOUTH);
 		
 	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -136,5 +142,6 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 		tblProfessor.setModel(new ProfessorTableModel(lista));
 		
 	}
+
 
 }

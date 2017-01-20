@@ -34,13 +34,15 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 	private DisciplinaCadastro janelaCadastro;
 	private DisciplinaCadastroEditar janelaEditar;
 	
-	public DisciplinaConsulta() {
+	public DisciplinaConsulta(Conexao cnx) {
 
+		//Teste
+				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
 		
-		conexao = new Conexao();
-		conexao.conecte();
+		//conexao = new Conexao();
+		//conexao.conecte();
 		
 		janelaCadastro = new DisciplinaCadastro(conexao, this);
 		janelaEditar = new DisciplinaCadastroEditar(conexao, this);

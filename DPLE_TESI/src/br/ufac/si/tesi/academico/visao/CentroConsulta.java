@@ -34,13 +34,15 @@ public class CentroConsulta extends JFrame implements ActionListener {
 	private CentroCadastro janelaCadastro;
 	private CentroCadastroEditar janelaEditar;
 	
-	public CentroConsulta() {
+	public CentroConsulta(Conexao cnx) {
 
+		//Teste
+				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
 		
-		conexao = new Conexao();
-		conexao.conecte();
+		//conexao = new Conexao();
+		//conexao.conecte();
 		
 		janelaCadastro = new CentroCadastro(conexao, this);
 		janelaEditar = new CentroCadastroEditar(conexao, this);
