@@ -36,19 +36,22 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 	
 	private JPanel painelBotoes, painelRotulos, painelCampos;
 	
-	private CursoControle centroControle;
+	private CursoControle cursoControle;
 	private AlunoControle controle;
 	private AlunoConsulta janelaPai;
 	private JPanel painelSexo;
-	private String campo;
+	private String sexoEscolhido;
+
+
 	
 
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AlunoCadastro(Conexao conexao, AlunoConsulta janelaPai) {
-		
+		setTitle("Controle Academico - Cadastro Aluno");
+
 		controle = new AlunoControle(conexao);
-		centroControle = new CursoControle(conexao);
+		cursoControle = new CursoControle(conexao);
 		
 		this.janelaPai = janelaPai;
 
@@ -94,9 +97,8 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 		campoEmail = new JTextField();
 		campoPne = new JCheckBox();
 		try {
-			campoCurso = new JComboBox(centroControle.getCursos().toArray());
+			campoCurso = new JComboBox(cursoControle.getCursos().toArray());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -133,33 +135,28 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 
 		if (e.getSource() == botaoConfirmar) {
 			
 			int matricula = Integer.parseInt(campoMatricula.getText());
 			String nome = campoNome.getText();
-			String sexoEscolhido = campoSexoMasc.isSelected()? "M" : " F";
-			if(campoSexoMasc.isSelected()){
-				sexoEscolhido =	"M";
-			}else {
-				sexoEscolhido = "F";
-			}
-		
-			//String sexo= campoSexo.getText();
-			
+			sexoEscolhido = campoSexoMasc.isSelected()? "M" : " F";
 			String telefone = campoTelefone.getText();
 			String endereco = campoEndereco.getText();
 			String cep = campoCep.getText();
 			String email = campoEmail.getText();
 			boolean pne = campoPne.isSelected();
-			Curso curso = (Curso) campoCurso.getSelectedItem();
-			int curso_codigo = curso.getCodigo();
+			Curso curso= (Curso) campoCurso.getSelectedItem();
+			int curso_codigo= curso.getCodigo();
+
 			
-//			Aluno centro = new Aluno();
-//			centro.setMatricula(matricula);
-//			centro.setNome(nome);
-			
-			confirmar(matricula, nome, telefone, endereco, cep, email,sexoEscolhido, pne, curso_codigo);
+			try {
+				confirmar(matricula, nome, telefone, endereco, cep, email,sexoEscolhido, pne, curso_codigo);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		} else if (e.getSource() == botaoCancelar) {
 			janelaPai.buscar();
@@ -168,9 +165,9 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 		
 	}
 	
-	public void confirmar(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo) {
+	public void confirmar(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo, boolean pne, int curso_codigo) throws SQLException {
 		
-		boolean status = controle.insertAluno(matricula, nome, telefone, endereco, cep, email,sexo, pne, curso_codigo);
+		boolean status = controle.insertAluno(matricula, nome,  telefone, endereco, cep, email,sexo,  pne, curso_codigo);
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -179,6 +176,7 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 		}
 		
 	}
+	
 	
 	public AlunoControle getControle() {
 		
@@ -195,7 +193,7 @@ public class AlunoCadastro extends JFrame implements ActionListener {
 	}
 
 	public String getCampoSexo() {
-		return campo;
+		return sexoEscolhido;
 		
 	}
 

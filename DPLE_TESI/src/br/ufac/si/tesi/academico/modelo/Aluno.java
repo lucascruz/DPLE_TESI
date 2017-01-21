@@ -50,7 +50,6 @@ public class Aluno{
 		this.curso = curso;
 	}
 	
-	
 	public void setEmail(String email){
 		this.email=email;
 	}
@@ -64,6 +63,12 @@ public class Aluno{
 	
 	public boolean isPne() {
 		return pne;
+	}
+	@Override
+	public String toString() {
+
+		return this.nome;
+		
 	}
 
 }

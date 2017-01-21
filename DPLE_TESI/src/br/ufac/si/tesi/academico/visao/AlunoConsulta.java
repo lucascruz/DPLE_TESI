@@ -40,6 +40,8 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
+		setTitle("Controle Academico - Consulta Aluno");
+
 		
 		//conexao = new Conexao();
 		//conexao.conecte();
@@ -52,8 +54,7 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 			lista = controle.getAlunos();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+			e.printStackTrace();		}
 		
 		painelBusca = new JPanel(new BorderLayout());
 		comboCampos = new JComboBox<String>(new String[]{"Matrícula","Nome"});
@@ -96,7 +97,13 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 			if (resposta == JOptionPane.YES_OPTION) {
 				int linhaSelecionada = tblAluno.getSelectedRow();
 				int matricula = Integer.parseInt(tblAluno.getModel().getValueAt(linhaSelecionada, 0).toString());
-				boolean status = controle.deleteAluno(matricula);
+				boolean status = false;
+				try {
+					status = controle.deleteAluno(matricula);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				if (status) {
 					JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 				} else {
@@ -121,8 +128,7 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 			try {
 				lista = controle.getAlunos();
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-			}
+				e.printStackTrace();		}
 		} else if (comboCampos.getSelectedIndex() == 0) {
 			try {
 				lista.add(controle.getAluno(Integer.parseInt(stringBusca)));
@@ -134,8 +140,7 @@ public class AlunoConsulta extends JFrame implements ActionListener {
 			try {
 				lista = controle.getAlunos(stringBusca);
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-			}
+				e.printStackTrace();			}
 		}
 		tblAluno.setModel(new AlunoTableModel(lista));
 		

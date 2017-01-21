@@ -93,5 +93,11 @@ public class Professor {
 	public void setCentro(Centro centro) {
 		this.centro = centro;
 	}
+	@Override
+	public String toString() {
+
+		return this.nome;
+		
+	}
 	
 }

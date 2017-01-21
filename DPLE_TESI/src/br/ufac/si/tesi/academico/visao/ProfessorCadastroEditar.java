@@ -13,18 +13,15 @@ public class ProfessorCadastroEditar extends ProfessorCadastro {
 	
 	public ProfessorCadastroEditar(Conexao conexao, ProfessorConsulta janelaPai) {
 		super(conexao, janelaPai);
+		setTitle("Controle Academico - Cadastro Professor - Editar");
+
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
+
+	public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) throws SQLException {
 		
-		boolean status = false;
-		try {
-			status = getControle().updateProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+		boolean status = getControle().updateProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -34,14 +31,14 @@ public class ProfessorCadastroEditar extends ProfessorCadastro {
 		
 	}
 	
-	public void carregar(int matricula) {
+	public void carregar(int matricula)  {
 		
 		Centro centro;
 		Professor professor = null;
 		try {
 			professor = getControle().getProfessor(matricula);
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		getCampoMatricula().setText(String.valueOf(professor.getMatricula()));

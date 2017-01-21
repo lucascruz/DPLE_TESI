@@ -3,6 +3,7 @@ package br.ufac.si.tesi.academico.controle;
 import java.sql.SQLException;
 import java.util.List;
 
+
 import br.ufac.si.tesi.academico.dados.CentroDB;
 import br.ufac.si.tesi.academico.dados.Conexao;
 import br.ufac.si.tesi.academico.modelo.Centro;
@@ -17,7 +18,7 @@ public class CentroControle {
 		
 	}
 	
-	public boolean insertCentro(String sigla, String nome) {
+	public boolean insertCentro(String sigla, String nome) throws SQLException {
 		
 		Centro centro = null;
 		
@@ -46,7 +47,7 @@ public class CentroControle {
 		
 	}
 	
-	public boolean deleteCentro(String sigla) {
+	public boolean deleteCentro(String sigla) throws SQLException {
 		
 		return dados.deleteCentro(sigla);		
 		

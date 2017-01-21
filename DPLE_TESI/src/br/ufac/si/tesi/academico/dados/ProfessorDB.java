@@ -28,7 +28,7 @@ public class ProfessorDB {
 		
 	}
 	
-	public boolean insertProfessor(Professor professor) {
+	public boolean insertProfessor(Professor professor) throws SQLException{
 		
 		String sql = "insert into professor (matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla) "
 				+ "values ( " + professor.getMatricula() + ","
@@ -52,7 +52,7 @@ public class ProfessorDB {
 		
 	}
 	
-	public boolean updateProfessor(Professor professor) {
+	public boolean updateProfessor(Professor professor)throws SQLException {
 		
 		String sql = "update professor set "
 				+ "nome = '" + professor.getNome() + "',"
@@ -76,7 +76,7 @@ public class ProfessorDB {
 		
 	}
 	
-	public boolean deleteProfessor(int matricula) {
+	public boolean deleteProfessor(int matricula)throws SQLException {
 		
 		String sql = "delete from professor where matricula=" + matricula + ";";
 		

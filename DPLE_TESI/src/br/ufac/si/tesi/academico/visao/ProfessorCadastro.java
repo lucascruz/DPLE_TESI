@@ -39,6 +39,9 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ProfessorCadastro(Conexao conexao, ProfessorConsulta janelaPai) {
 		
+		setTitle("Controle Academico - Cadastro Professor");
+
+		
 		controle = new ProfessorControle(conexao);
 		centroControle = new CentroControle(conexao);
 		
@@ -85,7 +88,7 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 		try {
 			campoCentro = new JComboBox(centroControle.getCentros().toArray());
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		painelCampos.add(campoMatricula);
@@ -130,12 +133,13 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 			boolean substituto = campoSubstituto.isSelected();
 			Centro centro = (Centro) campoCentro.getSelectedItem();
 			String centro_sigla = centro.getSigla();
-			
-//			Professor centro = new Professor();
-//			centro.setMatricula(matricula);
-//			centro.setNome(nome);
-			
-			confirmar(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+
+			try {
+				confirmar(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		} else if (e.getSource() == botaoCancelar) {
 			janelaPai.buscar();
@@ -144,14 +148,9 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 		
 	}
 	
-	public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) {
+public void confirmar(int matricula, String nome, int rg, long cpf, String telefone, String endereco, String cep, String email, boolean substituto, String centro_sigla) throws SQLException {
 		
-		boolean status = false;
-		try {
-			status = controle.insertProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+		boolean status = controle.insertProfessor(matricula, nome, rg, cpf, telefone, endereco, cep, email, substituto, centro_sigla);
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -208,3 +207,4 @@ public class ProfessorCadastro extends JFrame implements ActionListener {
 	}
 
 }
+

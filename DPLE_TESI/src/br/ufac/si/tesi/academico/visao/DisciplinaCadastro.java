@@ -26,7 +26,7 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 	private JLabel lblCodigo, lblNome, lblCh, lblCentroSigla;
 	private JButton botaoConfirmar, botaoCancelar;
 	private JTextField campoCodigo, campoNome, campoCh;
-	private JComboBox<Centro> campoSigla;
+	private JComboBox<Centro> campoCentro;
 	
 	private JPanel painelBotoes, painelRotulos, painelCampos;
 	
@@ -36,6 +36,8 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DisciplinaCadastro(Conexao conexao, DisciplinaConsulta janelaPai) {
+		setTitle("Controle Academico - Cadastro Disciplina");
+
 		
 		controle = new DisciplinaControle(conexao);
 		centroControle = new CentroControle(conexao);
@@ -63,15 +65,15 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		campoNome = new JTextField();
 		campoCh = new JTextField();
 		try {
-			campoSigla = new JComboBox(centroControle.getCentros().toArray());
+			campoCentro = new JComboBox(centroControle.getCentros().toArray());
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		painelCampos.add(campoCodigo);
 		painelCampos.add(campoNome);
 		painelCampos.add(campoCh);
-		painelCampos.add(campoSigla);
+		painelCampos.add(campoCentro);
 		
 		painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		botaoConfirmar = new JButton("Confirmar");
@@ -88,34 +90,38 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == botaoConfirmar) {
 			
-			String codigo =campoCodigo.getText();
+			int codigo = Integer.parseInt(campoCodigo.getText());
 			String nome = campoNome.getText();
-			int ch= Integer.parseInt(campoCh.getText());;
-			Centro centro = (Centro) campoSigla.getSelectedItem();
-			String centro_sigla= centro.getSigla();
+			String ch = campoCh.getText();
+			int valorCh = Integer.parseInt(ch);
+			Centro centro = (Centro) campoCentro.getSelectedItem();
+			String centro_sigla = centro.getSigla();
 			
-			confirmar(codigo, nome, ch,  centro_sigla);
+			
+			try {
+				confirmar(codigo, nome, valorCh, centro_sigla);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			
 		} else if (e.getSource() == botaoCancelar) {
-			janelaPai.buscar();
+			try {
+				janelaPai.buscar();
+			} catch (SQLException e1) {
+			e1.printStackTrace();
+			}
 			this.dispose();
 		}
 		
 	}
 	
-	public void confirmar(String codigo, String nome, int ch, String  centro_sigla) {
+	public void confirmar(int codigo, String nome, int Ch, String centro_sigla) throws SQLException {
 		
-		boolean status = false;
-		try {
-			status = controle.insertDisciplina(codigo, nome, ch, centro_sigla);
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+		boolean status = controle.insertDisciplina(codigo, nome, Ch, centro_sigla);
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
@@ -131,22 +137,21 @@ public class DisciplinaCadastro extends JFrame implements ActionListener {
 		
 	}
 
-	public JTextField getCampoCodigo(){
+	public JTextField getCampoCodigo() {
 		return campoCodigo;
 	}
 
 	public JTextField getCampoNome() {
 		return campoNome;
 	}
-
+	
 	public JTextField getCampoCh() {
 		return campoCh;
 	}
-
-
+	
 	public JComboBox<Centro> getCampoCentro() {
-		return campoSigla;
+		return campoCentro;
 	}
 
-
 }
+

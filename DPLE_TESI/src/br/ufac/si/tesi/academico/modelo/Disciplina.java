@@ -1,8 +1,8 @@
 package br.ufac.si.tesi.academico.modelo;
 
 public class Disciplina {
-	private String nome,codigo;
-	private int ch;
+	private String nome;
+	private int ch, codigo;
 	private Centro centro;
 	public String getNome() {
 		return nome;
@@ -10,10 +10,10 @@ public class Disciplina {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 	public int getCh() {
@@ -27,5 +27,11 @@ public class Disciplina {
 	}
 	public Centro getCentro(){
 		return centro;
+	}
+	@Override
+	public String toString() {
+
+		return this.nome;
+		
 	}
 }

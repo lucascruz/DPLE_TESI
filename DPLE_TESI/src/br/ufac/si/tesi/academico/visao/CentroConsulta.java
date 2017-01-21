@@ -40,6 +40,8 @@ public class CentroConsulta extends JFrame implements ActionListener {
 				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
+		setTitle("Controle Academico - Consultar Centro");
+
 		
 		//conexao = new Conexao();
 		//conexao.conecte();
@@ -51,8 +53,7 @@ public class CentroConsulta extends JFrame implements ActionListener {
 		try {
 			lista = controle.getCentros();
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+			e.printStackTrace();		}
 		
 		painelBusca = new JPanel(new BorderLayout());
 		comboCampos = new JComboBox<String>(new String[]{"Sigla","Nome"});
@@ -95,7 +96,13 @@ public class CentroConsulta extends JFrame implements ActionListener {
 			if (resposta == JOptionPane.YES_OPTION) {
 				int linhaSelecionada = tblCentro.getSelectedRow();
 				String sigla = tblCentro.getModel().getValueAt(linhaSelecionada, 0).toString();
-				boolean status = controle.deleteCentro(sigla);
+				boolean status = false;
+				try {
+					status = controle.deleteCentro(sigla);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				if (status) {
 					JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 				} else {
@@ -112,7 +119,7 @@ public class CentroConsulta extends JFrame implements ActionListener {
 		
 	}
 
-	public void buscar() {
+public void buscar()  {
 		
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
@@ -120,20 +127,19 @@ public class CentroConsulta extends JFrame implements ActionListener {
 			try {
 				lista = controle.getCentros();
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
 			try {
 				lista.add(controle.getCentro(stringBusca));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		} else {
 			try {
 				lista = controle.getCentros(stringBusca);
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		tblCentro.setModel(new CentroTableModel(lista));

@@ -9,42 +9,42 @@ import br.ufac.si.tesi.academico.modelo.Centro;
 
 @SuppressWarnings("serial")
 public class CentroCadastroEditar extends CentroCadastro {
-	
+
 	public CentroCadastroEditar(Conexao conexao, CentroConsulta janelaPai) {
 		super(conexao, janelaPai);
+		setTitle("Controle Academico - Cadastro Centro / Editar");
+
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void confirmar(String sigla, String nome) {
-		
+
 		boolean status = false;
 		try {
 			status = getControle().updateCentro(sigla, nome);
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
-		
+			e.printStackTrace();	}
+
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro atualizado com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 		} else {
 			JOptionPane.showMessageDialog(this, "Falha na atualização do registro!", "Status", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
-	
+
 	public void carregar(String sigla) {
-		
+
 		Centro centro = null;
 		try {
 			centro = getControle().getCentro(sigla);
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
+			e.printStackTrace();		}
 		getCampoSigla().setText(centro.getSigla());
 		getCampoNome().setText(centro.getNome());
 		getCampoSigla().setEnabled(false);
-		
+
 	}
 
 }

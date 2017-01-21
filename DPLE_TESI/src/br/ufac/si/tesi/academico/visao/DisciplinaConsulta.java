@@ -35,6 +35,9 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 	private DisciplinaCadastroEditar janelaEditar;
 	
 	public DisciplinaConsulta(Conexao cnx) {
+		
+		setTitle("Controle Academico - Consulta Disciplina");
+
 
 		//Teste
 				this.conexao = cnx;
@@ -51,7 +54,7 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 		try {
 			lista = controle.getDisciplinas();
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		painelBusca = new JPanel(new BorderLayout());
@@ -89,54 +92,65 @@ public class DisciplinaConsulta extends JFrame implements ActionListener {
 		if (e.getSource() == botaoInserir) {
 			janelaCadastro.setVisible(true);
 		} else if (e.getSource() == botaoBuscar) {
-			buscar();
+			try {
+				buscar();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		} else if (e.getSource() == botaoExcluir) {
+			if(tblDisciplina.getSelectedRow() == -1){
+				JOptionPane.showMessageDialog(null,"Selecione uma Disciplina para excluir! ", "Atençao", JOptionPane.INFORMATION_MESSAGE);
+			}else{
 			int resposta = JOptionPane.showConfirmDialog(null, "Confirma a exclusão?", "Alerta", JOptionPane.YES_NO_OPTION);
 			if (resposta == JOptionPane.YES_OPTION) {
 				int linhaSelecionada = tblDisciplina.getSelectedRow();
-				int matricula = Integer.parseInt(tblDisciplina.getModel().getValueAt(linhaSelecionada, 0).toString());
-				boolean status = controle.deleteDisciplina(matricula);
+				String codigo = tblDisciplina.getModel().getValueAt(linhaSelecionada, 0).toString();
+				boolean status = false;
+				try {
+					status = controle.deleteDisciplina(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				if (status) {
 					JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 				} else {
 					JOptionPane.showMessageDialog(this, "Falha na exclusão do registro!", "Status", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			buscar();
+			try {
+				buscar();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		} else if (e.getSource() == botaoEditar) {
+			if(tblDisciplina.getSelectedRow() == -1){
+				JOptionPane.showMessageDialog(null,"Selecione uma Disciplina para editar! ", "Atençao", JOptionPane.INFORMATION_MESSAGE);
+			}else{
 			int linhaSelecionada = tblDisciplina.getSelectedRow();
-			int matricula = Integer.parseInt(tblDisciplina.getModel().getValueAt(linhaSelecionada, 0).toString());
-			janelaEditar.carregar(matricula);
+			int codigo = Integer.parseInt(tblDisciplina.getModel().getValueAt(linhaSelecionada, 0).toString());
+				janelaEditar.carregar(codigo);
+
 			janelaEditar.setVisible(true);
+		}
 		}
 		
 	}
 
-	public void buscar() {
+	public void buscar() throws SQLException {
 		
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
 		if (stringBusca.isEmpty()) {
-			try {
-				lista = controle.getDisciplinas();
-			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-			}
+			lista = controle.getDisciplinas();
 		} else if (comboCampos.getSelectedIndex() == 0) {
-			try {
-				lista.add(controle.getDisciplina(Integer.parseInt(stringBusca)));
-			}catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-			}
+			lista.add(controle.getDisciplina(Integer.parseInt(stringBusca)));
 		} else {
-			try {
-				lista = controle.getDisciplinas(stringBusca);
-			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-			}
+			lista = controle.getDisciplinas(stringBusca);
 		}
 		tblDisciplina.setModel(new DisciplinaTableModel(lista));
 		
 	}
 
 }
+

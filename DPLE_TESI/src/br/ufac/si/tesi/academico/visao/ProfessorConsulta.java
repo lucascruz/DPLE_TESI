@@ -35,6 +35,7 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 	private ProfessorCadastroEditar janelaEditar;
 	
 	public ProfessorConsulta(Conexao cnx) {
+		
 
 //Teste
 		this.conexao = cnx;
@@ -42,6 +43,8 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 		
 		setSize(400,300);
 		setLocationRelativeTo(null);
+		setTitle("Controle Academico - Consulta Professor");
+
 		
 		//conexao = new Conexao();
 	//	conexao.conecte();
@@ -53,7 +56,8 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 		try {
 			lista = controle.getProfessores();
 		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+			
+			e.printStackTrace();
 		}
 		
 		painelBusca = new JPanel(new BorderLayout());
@@ -95,18 +99,27 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 		} else if (e.getSource() == botaoBuscar) {
 			buscar();
 		} else if (e.getSource() == botaoExcluir) {
+			if(tblProfessor.getSelectedRow() == -1){
+				JOptionPane.showMessageDialog(null,"Selecione um Professor ao menos. ", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+			}else{
 			int resposta = JOptionPane.showConfirmDialog(null, "Confirma a exclusão?", "Alerta", JOptionPane.YES_NO_OPTION);
 			if (resposta == JOptionPane.YES_OPTION) {
 				int linhaSelecionada = tblProfessor.getSelectedRow();
 				int matricula = Integer.parseInt(tblProfessor.getModel().getValueAt(linhaSelecionada, 0).toString());
-				boolean status = controle.deleteProfessor(matricula);
+				boolean status = false;
+				try {
+					status = controle.deleteProfessor(matricula);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				if (status) {
 					JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 				} else {
 					JOptionPane.showMessageDialog(this, "Falha na exclusão do registro!", "Status", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			buscar();
+			buscar();}
 		} else if (e.getSource() == botaoEditar) {
 			int linhaSelecionada = tblProfessor.getSelectedRow();
 			int matricula = Integer.parseInt(tblProfessor.getModel().getValueAt(linhaSelecionada, 0).toString());
@@ -124,19 +137,19 @@ public class ProfessorConsulta extends JFrame implements ActionListener {
 			try {
 				lista = controle.getProfessores();
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		} else if (comboCampos.getSelectedIndex() == 0) {
 			try {
 				lista.add(controle.getProfessor(Integer.parseInt(stringBusca)));
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		} else {
 			try {
 				lista = controle.getProfessores(stringBusca);
 			} catch (SQLException e) {
-				System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		tblProfessor.setModel(new ProfessorTableModel(lista));

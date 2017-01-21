@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,7 +32,11 @@ public class CentroCadastro extends JFrame implements ActionListener {
 	
 	public CentroCadastro(Conexao conexao, CentroConsulta janelaPai) {
 		
+		
+		
 		controle = new CentroControle(conexao);
+		setTitle("Controle Academico - Cadastro Centro");
+
 		
 		this.janelaPai = janelaPai;
 
@@ -88,7 +93,13 @@ public class CentroCadastro extends JFrame implements ActionListener {
 	
 	public void confirmar(String sigla, String nome) {
 		
-		boolean status = controle.insertCentro(sigla, nome);
+		boolean status = false;
+		try {
+			status = controle.insertCentro(sigla, nome);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (status) {
 			JOptionPane.showMessageDialog(this, "Registro inserido com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 

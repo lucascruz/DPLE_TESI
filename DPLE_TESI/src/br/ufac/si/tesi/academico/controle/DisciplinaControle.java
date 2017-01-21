@@ -19,11 +19,11 @@ public class DisciplinaControle {
 		
 	}
 	
-	public boolean insertDisciplina( String codigo, String nome, int ch, String centro_sigla) throws SQLException {
+	public boolean insertDisciplina( int codigo, String nome, int ch, String centro_sigla) throws SQLException {
 		
 		Disciplina disciplina = null;
 		
-		if (codigo.isEmpty() || nome.isEmpty() || ch == 0 || centro_sigla.isEmpty()) {
+		if (codigo==0 || nome.isEmpty() || ch == 0 || centro_sigla.isEmpty()) {
 			return false;
 		} else {
 			disciplina = new Disciplina();
@@ -36,11 +36,11 @@ public class DisciplinaControle {
 		
 	}
 	
-	public boolean updateDisciplina( String codigo, String nome, int ch, String centro_sigla) throws SQLException {
+	public boolean updateDisciplina( int codigo, String nome, int ch, String centro_sigla) throws SQLException {
 		
 		Disciplina disciplina = null;
 		
-		if (codigo.isEmpty() || nome.isEmpty() || ch == 0 || centro_sigla.isEmpty()) {
+		if (codigo==0 || nome.isEmpty() || ch == 0 || centro_sigla.isEmpty()) {
 			return false;
 		} else {
 			disciplina = new Disciplina();
@@ -53,7 +53,7 @@ public class DisciplinaControle {
 		
 	}
 	
-	public boolean deleteDisciplina(int matricula) {
+	public boolean deleteDisciplina(String matricula) throws SQLException {
 		
 		return dados.deleteDisciplina(matricula);		
 		

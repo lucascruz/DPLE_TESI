@@ -6,7 +6,6 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufac.si.tesi.academico.modelo.Disciplina;
 
-@SuppressWarnings("serial")
 public class DisciplinaTableModel extends AbstractTableModel {
 	
 	private List<Disciplina> lista;
@@ -43,9 +42,9 @@ public class DisciplinaTableModel extends AbstractTableModel {
 			nome = "CH";
 			break;
 		case 3:
-			nome = "Centro";
+			nome = "Sigla Centro";
 			break;
-			
+
 		default:
 			break;
 		}
@@ -81,3 +80,4 @@ public class DisciplinaTableModel extends AbstractTableModel {
 	}
 
 }
+

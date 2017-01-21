@@ -1,12 +1,16 @@
 package br.ufac.si.tesi.academico.modelo;
+
+import java.math.BigDecimal;
+
 public class Curso {
 	private String nome;
-	private int codigo, coordenador;
+	private int coordenador, codigo;
+	private Professor professor;
 	public int getCoordenador() {
 		return coordenador;
 	}
-	public void setCoordenador(int coordenador) {
-		this.coordenador = coordenador;
+	public void setCoordenador(Professor p) {
+		this.setProfessor(p);
 	}
 
 
@@ -38,5 +42,11 @@ public class Curso {
 	@Override
 	public String toString(){
 		return this.nome;
+	}
+	public Professor getProfessor() {
+		return professor;
+	}
+	public void setProfessor(Professor profe) {
+		this.professor = profe;
 	}
 }

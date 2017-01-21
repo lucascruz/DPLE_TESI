@@ -5,16 +5,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufac.si.tesi.academico.modelo.Curso;
+import br.ufac.si.tesi.academico.modelo.*;
 
 public class CursoDB {
 	
 	private Conexao conexao;
 	private ResultSet rs;
+	private ProfessorDB dadosProfessor;
 	
 	public CursoDB(Conexao conexao) {
 		
 		this.conexao = conexao;
+		dadosProfessor = new ProfessorDB(conexao);
 		
 	}
 	
@@ -26,25 +28,12 @@ public class CursoDB {
 		
 	}
 	
-	public boolean insertCurso(Curso curso) {
+	public boolean insertCurso(Curso curso) throws SQLException {
 		
-		String sql = "insert into curso (codigo, nome, coordenador) values ('" + curso.getCodigo() + "', '" + curso.getNome() +"', '" + curso.getCoordenador() + "')";
-		
-		int status = conexao.atualize(sql);
-		
-		if (status > 0) {
-			return true;
-		}
-		
-		return false;
-		
-	}
-	
-	public boolean updateCurso(Curso curso) {
-		
-		String sql = "update curso "
-				+ "set nome='" + curso.getNome() + "' "
-				+ "where codigo='" + curso.getCodigo() + "';";
+		String sql = "insert into curso (codigo, nome, coordenador) "
+				+ "values ( " + curso.getCodigo() + ","
+						+ "'" + curso.getNome() + "',"
+			      		+ "'" + curso.getProfessor().getMatricula() + "')";
 		
 		int status = conexao.atualize(sql);
 		
@@ -56,9 +45,26 @@ public class CursoDB {
 		
 	}
 	
-	public boolean deleteCurso(int codigo) {
+	public boolean updateCurso(Curso curso) throws SQLException {
 		
-		String sql = "delete from curso where codigo='" + codigo + "'";
+		String sql = "update curso set "
+				+ "nome = " + curso.getNome() + ","
+				+ "coordenador = '" + curso.getProfessor().getMatricula()+ "' "
+				+ "where codigo = " + curso.getCodigo() + ";";
+				
+		int status = conexao.atualize(sql);
+		
+		if (status > 0) {
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean deleteCurso(int codigo) throws SQLException {
+		
+		String sql = "delete from curso where codigo=" +codigo + ";";
 		
 		int status = conexao.atualize(sql);
 		
@@ -70,21 +76,19 @@ public class CursoDB {
 		
 	}
 	
-	public Curso getCurso(int codigo) {
+	public Curso getCurso(int codigo) throws SQLException {
 
 		Curso curso = null;
-		String sql = "select codigo, nome from curso where codigo='" + codigo + "';";
+		String sql = "select * from curso where codigo=' " + codigo + "';";
 		
 		rs = conexao.consulte(sql);
-		try {
+
 			while (rs.next()) {
 				curso = new Curso();
 				curso.setCodigo(rs.getInt(1));
 				curso.setNome(rs.getString(2));
+				curso.setCoordenador(dadosProfessor.getProfessor(rs.getInt(3)));				
 			}
-		} catch (SQLException e) {
-			System.out.println("Erro: #" + e.getErrorCode() + " - " + e.getMessage());
-		}
 		
 		return curso;
 		
@@ -94,13 +98,15 @@ public class CursoDB {
 		
 		List<Curso> lista = new ArrayList<Curso>();
 		Curso curso = null;
-		String sql = "select codigo, nome from curso;";
+		String sql = "select * from curso;";
 		
 		rs = conexao.consulte(sql);
+
 			while (rs.next()) {
 				curso = new Curso();
 				curso.setCodigo(rs.getInt(1));
 				curso.setNome(rs.getString(2));
+				curso.setCoordenador(dadosProfessor.getProfessor(rs.getInt(3)));	
 				lista.add(curso);
 			}
 		
@@ -108,20 +114,22 @@ public class CursoDB {
 		
 	}
 	
-	public List<Curso> getCursos(String nome) throws SQLException {
+	public List<Curso> getCursos(String nome)  throws SQLException{
 		
 		List<Curso> lista = new ArrayList<Curso>();
 		Curso curso = null;
-		String sql = "select codigo, nome from curso where nome like '%" + nome + "%';";
+		String sql = "select * from curso where nome like '%" + nome + "%';";
 		
 		rs = conexao.consulte(sql);
+
 			while (rs.next()) {
 				curso = new Curso();
 				curso.setCodigo(rs.getInt(1));
 				curso.setNome(rs.getString(2));
+				curso.setCoordenador(dadosProfessor.getProfessor(rs.getInt(3)));	
 				lista.add(curso);
 			}
-		
+
 		return lista;
 		
 	}

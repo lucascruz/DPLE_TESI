@@ -52,7 +52,7 @@ public class AlunoTableModel extends AbstractTableModel {
 			nome = "Endereço";
 			break;
 		case 6:
-			nome = "CEP";
+			nome = "Sexo";
 			break;
 		case 7:
 			nome = "E-mail";
@@ -104,7 +104,7 @@ public class AlunoTableModel extends AbstractTableModel {
 			obj = aluno.isPne();
 			break;
 		case 8:
-			obj = aluno.getCurso().getCodigo();
+			obj = aluno.getCurso();
 			break;
 
 		default:

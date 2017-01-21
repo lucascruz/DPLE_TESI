@@ -6,7 +6,6 @@ import javax.swing.table.AbstractTableModel;
 
 import br.ufac.si.tesi.academico.modelo.Curso;
 
-@SuppressWarnings("serial")
 public class CursoTableModel extends AbstractTableModel {
 	
 	private List<Curso> lista;
@@ -42,7 +41,7 @@ public class CursoTableModel extends AbstractTableModel {
 		case 2:
 			nome = "Coordenador";
 			break;
-			
+
 		default:
 			break;
 		}
@@ -54,7 +53,7 @@ public class CursoTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int linha, int coluna) {
 
-		Curso curso = lista.get(linha);
+		Curso curso= lista.get(linha);
 		Object obj = null;
 		
 		switch (coluna) {
@@ -65,8 +64,9 @@ public class CursoTableModel extends AbstractTableModel {
 			obj = curso.getNome();
 			break;
 		case 2:
-			obj = curso.getCoordenador();
+			obj = curso.getProfessor().getNome();
 			break;
+
 		default:
 			break;
 		}
@@ -75,3 +75,4 @@ public class CursoTableModel extends AbstractTableModel {
 	}
 
 }
+

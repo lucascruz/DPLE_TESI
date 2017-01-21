@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufac.si.tesi.academico.modelo.Disciplina;
+import br.ufac.si.tesi.academico.modelo.*;
 
 public class DisciplinaDB {
 	
@@ -28,7 +28,7 @@ public class DisciplinaDB {
 		
 	}
 	
-	public boolean insertDisciplina(Disciplina disciplina) {
+	public boolean insertDisciplina(Disciplina disciplina) throws SQLException {
 		
 		String sql = "insert into disciplina (codigo, nome, ch,  centro_sigla) "
 				+ "values ( " + disciplina.getCodigo() + ","
@@ -46,7 +46,7 @@ public class DisciplinaDB {
 		
 	}
 	
-	public boolean updateDisciplina(Disciplina disciplina) {
+	public boolean updateDisciplina(Disciplina disciplina) throws SQLException {
 		
 		String sql = "update disciplina set "
 				+ "nome = " + disciplina.getNome() + ","
@@ -64,7 +64,7 @@ public class DisciplinaDB {
 		
 	}
 	
-	public boolean deleteDisciplina(int codigo) {
+	public boolean deleteDisciplina(String codigo) throws SQLException {
 		
 		String sql = "delete from disciplina where codigo=" +codigo + ";";
 		
@@ -87,7 +87,7 @@ public class DisciplinaDB {
 
 			while (rs.next()) {
 				disciplina = new Disciplina();
-				disciplina.setCodigo(rs.getString(1));
+				disciplina.setCodigo(rs.getInt(1));
 				disciplina.setNome(rs.getString(2));
 				disciplina.setCh(rs.getInt(3));
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));				
@@ -107,7 +107,7 @@ public class DisciplinaDB {
 
 			while (rs.next()) {
 				disciplina = new Disciplina();
-				disciplina.setCodigo(rs.getString(1));
+				disciplina.setCodigo(rs.getInt(1));
 				disciplina.setNome(rs.getString(2));
 				disciplina.setCh(rs.getInt(3));
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));		
@@ -128,7 +128,7 @@ public class DisciplinaDB {
 
 			while (rs.next()) {
 				disciplina = new Disciplina();
-				disciplina.setCodigo(rs.getString(1));
+				disciplina.setCodigo(rs.getInt(1));
 				disciplina.setNome(rs.getString(2));
 				disciplina.setCh(rs.getInt(3));
 				disciplina.setCentro(dadosCentro.getCentro(rs.getString(4)));		

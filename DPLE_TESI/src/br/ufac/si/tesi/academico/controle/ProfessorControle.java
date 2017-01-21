@@ -1,5 +1,6 @@
 package br.ufac.si.tesi.academico.controle;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class ProfessorControle {
 			professor.setEmail(email);
 			professor.setSubstituto(substituto);
 			professor.setCentro(centroControle.getCentro(centro_sigla));
+			System.out.println(professor.getCentro());
 			return dados.insertProfessor(professor);
 		}
 		
@@ -64,7 +66,7 @@ public class ProfessorControle {
 		
 	}
 	
-	public boolean deleteProfessor(int matricula) {
+	public boolean deleteProfessor(int matricula) throws SQLException {
 		
 		return dados.deleteProfessor(matricula);		
 		

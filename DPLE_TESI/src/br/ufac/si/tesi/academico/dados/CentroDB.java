@@ -26,7 +26,7 @@ public class CentroDB {
 		
 	}
 	
-	public boolean insertCentro(Centro centro) {
+	public boolean insertCentro(Centro centro) throws SQLException {
 		
 		String sql = "insert into centro (sigla, nome) values ('" + centro.getSigla() + "', '" + centro.getNome() + "')";
 		
@@ -40,7 +40,7 @@ public class CentroDB {
 		
 	}
 	
-	public boolean updateCentro(Centro centro) {
+	public boolean updateCentro(Centro centro) throws SQLException {
 		
 		String sql = "update centro "
 				+ "set nome='" + centro.getNome() + "' "
@@ -56,7 +56,7 @@ public class CentroDB {
 		
 	}
 	
-	public boolean deleteCentro(String sigla) {
+	public boolean deleteCentro(String sigla) throws SQLException {
 		
 		String sql = "delete from centro where sigla='" + sigla + "'";
 		

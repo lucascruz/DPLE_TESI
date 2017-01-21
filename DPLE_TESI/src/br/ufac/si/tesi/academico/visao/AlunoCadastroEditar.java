@@ -13,6 +13,8 @@ public class AlunoCadastroEditar extends AlunoCadastro {
 	
 	public AlunoCadastroEditar(Conexao conexao, AlunoConsulta janelaPai) {
 		super(conexao, janelaPai);
+		setTitle("Controle Academico - Cadastro Aluno / Editar");
+
 	}
 
 	@Override
@@ -41,13 +43,12 @@ public class AlunoCadastroEditar extends AlunoCadastro {
 		try {
 			aluno = getControle().getAluno(matricula);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		getCampoMatricula().setText(String.valueOf(aluno.getMatricula()));
 		getCampoNome().setText(aluno.getNome());
-		getCampo().setText(aluno.getSexo());
+		getCampoSexo();
 		getCampoTelefone().setText(aluno.getFone());
 		getCampoEndereco().setText(aluno.getEndereco());
 		getCampoCep().setText(aluno.getCep());
@@ -56,7 +57,7 @@ public class AlunoCadastroEditar extends AlunoCadastro {
 
 		for (int i = 0; i < getCampoCurso().getModel().getSize(); i++) {
 			curso = getCampoCurso().getModel().getElementAt(i);
-			if (curso.getNome().equals(aluno.getCurso().getNome())) {
+			if (curso.getNome().equals(aluno.getCurso())) {
 				getCampoCurso().setSelectedItem(curso);				
 			}
 		}

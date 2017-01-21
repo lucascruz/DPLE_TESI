@@ -40,6 +40,8 @@ public class CursoConsulta extends JFrame implements ActionListener {
 				this.conexao = cnx;
 		setSize(400,300);
 		setLocationRelativeTo(null);
+		setTitle("Controle Academico - Consultar Curso");
+
 		
 		//conexao = new Conexao();
 		//conexao.conecte();
@@ -51,12 +53,10 @@ public class CursoConsulta extends JFrame implements ActionListener {
 		try {
 			lista = controle.getCursos();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			e.printStackTrace();		}
 		
 		painelBusca = new JPanel(new BorderLayout());
-		comboCampos = new JComboBox<String>(new String[]{"Codigo","Nome"});
+		comboCampos = new JComboBox<String>(new String[]{"Sigla","Nome"});
 		tfStringBusca = new JTextField();
 		botaoBuscar = new JButton("Buscar");
 		painelBusca.add(comboCampos, BorderLayout.WEST);
@@ -90,54 +90,68 @@ public class CursoConsulta extends JFrame implements ActionListener {
 		if (e.getSource() == botaoInserir) {
 			janelaCadastro.setVisible(true);
 		} else if (e.getSource() == botaoBuscar) {
-			buscar();
+			try {
+				buscar();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		} else if (e.getSource() == botaoExcluir) {
+			if(tblCurso.getSelectedRow() ==-1){
+				JOptionPane.showMessageDialog(null,"Selecione um Curso para excluir! ", "Atençao", JOptionPane.INFORMATION_MESSAGE);
+			}else{
 			int resposta = JOptionPane.showConfirmDialog(null, "Confirma a exclusão?", "Alerta", JOptionPane.YES_NO_OPTION);
 			if (resposta == JOptionPane.YES_OPTION) {
 				int linhaSelecionada = tblCurso.getSelectedRow();
-				int matricula = Integer.parseInt(tblCurso.getModel().getValueAt(linhaSelecionada, 0).toString());
-				boolean status = controle.deleteCurso(matricula);
+				int codigo = Integer.parseInt(tblCurso.getModel().getValueAt(linhaSelecionada, 0).toString());
+				boolean status = false;
+				try {
+					status = controle.deleteCurso(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				if (status) {
 					JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Status", JOptionPane.INFORMATION_MESSAGE); 
 				} else {
 					JOptionPane.showMessageDialog(this, "Falha na exclusão do registro!", "Status", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			buscar();
-		} else if (e.getSource() == botaoEditar) {
-			int linhaSelecionada = tblCurso.getSelectedRow();
-			int matricula = Integer.parseInt(tblCurso.getModel().getValueAt(linhaSelecionada, 0).toString());
 			try {
-				janelaEditar.carregar(matricula);
+				buscar();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		} else if (e.getSource() == botaoEditar) {
+			if(tblCurso.getSelectedRow() == -1){
+				JOptionPane.showMessageDialog(null,"Selecione um Curso para editar! ", "Atençao", JOptionPane.INFORMATION_MESSAGE);
+			}else{
+			int linhaSelecionada = tblCurso.getSelectedRow();
+			int codigo = Integer.parseInt(tblCurso.getModel().getValueAt(linhaSelecionada, 0).toString());
+			try {
+				janelaEditar.carregar(codigo);
+			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			janelaEditar.setVisible(true);
 		}
+		}
 		
 	}
 
-	public void buscar() {
+	public void buscar() throws SQLException {
 		
 		lista.clear();
 		String stringBusca = tfStringBusca.getText();
 		if (stringBusca.isEmpty()) {
-			try {
-				lista = controle.getCursos();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			lista = controle.getCursos();
 		} else if (comboCampos.getSelectedIndex() == 0) {
-			lista.add(controle.getCurso(Integer.parseInt(stringBusca)));
-		} else {
 			try {
-				lista = controle.getCursos(stringBusca);
+				lista.add(controle.getCurso(Integer.parseInt(stringBusca)));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else {
+			lista = controle.getDisciplinas(stringBusca);
 		}
 		tblCurso.setModel(new CursoTableModel(lista));
 		

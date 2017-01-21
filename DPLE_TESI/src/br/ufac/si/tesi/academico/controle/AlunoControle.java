@@ -1,5 +1,6 @@
 package br.ufac.si.tesi.academico.controle;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class AlunoControle {
 		
 	}
 	
-	public boolean insertAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo) {
+	public boolean insertAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo, boolean pne, int curso_codigo) throws SQLException {
 		
-		Aluno aluno = null;
+		Aluno aluno= null;
 		
-		if (matricula == 0 || nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() ||cep.isEmpty()  || email.isEmpty() || sexo.isEmpty() || pne == false || curso_codigo==0){
+		if (matricula == 0 || nome.isEmpty() ||  email.isEmpty() || curso_codigo==0) {
 			return false;
 		} else {
 			aluno = new Aluno();
@@ -36,20 +37,20 @@ public class AlunoControle {
 			aluno.setSexo(sexo);
 			aluno.setPne(pne);
 			aluno.setCurso(cursoControle.getCurso(curso_codigo));
+			System.out.println(aluno.getCurso());
 			return dados.insertAluno(aluno);
 		}
 		
 	}
 	
-	public boolean updateAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo,  boolean pne, int curso_codigo) throws SQLException{
+	public boolean updateAluno(int matricula, String nome, String telefone, String endereco, String cep, String email, String sexo, boolean pne, int curso_codigo) throws SQLException {
 		
-		Aluno aluno = null;
+		Aluno aluno= null;
 		
-		if (matricula == 0 || nome.isEmpty() || telefone.isEmpty() || endereco.isEmpty() ||cep.isEmpty()  || email.isEmpty() || pne==false || curso_codigo==0){
+		if (matricula == 0 || nome.isEmpty() ||  email.isEmpty() || telefone.isEmpty() || cep.isEmpty() || endereco.isEmpty() || curso_codigo ==0) {
 			return false;
 		} else {
 			aluno = dados.getAluno(matricula);
-			aluno.setMatricula(matricula);
 			aluno.setNome(nome);
 			aluno.setFone(telefone);
 			aluno.setEndereco(endereco);
@@ -58,12 +59,12 @@ public class AlunoControle {
 			aluno.setSexo(sexo);
 			aluno.setPne(pne);
 			aluno.setCurso(cursoControle.getCurso(curso_codigo));
-			return dados.updateAluno(aluno);
+			return dados.updateProfessor(aluno);
 		}
 		
 	}
 	
-	public boolean deleteAluno(int matricula) {
+	public boolean deleteAluno(int matricula) throws SQLException {
 		
 		return dados.deleteAluno(matricula);		
 		
@@ -88,4 +89,3 @@ public class AlunoControle {
 	}
 
 }
-
